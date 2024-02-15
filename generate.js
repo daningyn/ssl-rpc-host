@@ -9,8 +9,8 @@ const argv = require('yargs')
 const fs = require('fs');
 
 const vps = argv.vps;
-if (!vps || _.split(vps, '.').length !== 4) {
-  console.log('Missing parameter. Please add param --vps 1.1.1.1 with 1.1.1.1 is your VPS\'s IP');
+if (!vps) {
+  console.log('Missing parameter. Please add param --vps dns.com with dns.com is your VPS\'s dns');
   process.exit(0);
 }
 
