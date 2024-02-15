@@ -6,12 +6,15 @@ if (!fs.existsSync('./docker-compose.yml') || !fs.existsSync('./nginx/nginx.conf
   process.exit(0);
 }
 
-cp.exec('docker-compose up -d --build', (err, stdout, stderr) => {
+const child = cp.exec('docker-compose up -d --build', (err, stdout, stderr) => {
   if (err) {
     console.log(err.message);
     process.exit(0);
     return
   }
-  console.log('Running');
+});
+
+child.stdout.on('data', data => {
+  console.log(data.toString());
 });
 

@@ -12,7 +12,7 @@ services:
   nginx:
     stdin_open: true
     image: nginx
-    restart: unless_stopped
+    restart: unless-stopped
     container_name: nginx_server
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
