@@ -1,16 +1,11 @@
 version: '3.3'
 
 services:
-  certbot:
-    image: certbot/certbot
-    container_name: certbot
-    volumes:
-      - .certbot/etc:/etc/letsencrypt
-      - .certbot/var:/var/lib/letsencrypt
-      - .certbot/www:/var/www/certbot
-    command: certonly --webroot -w /var/www/certbot --email {email} --keep-until-expiring -d {domain} --agree-tos
   nginx:
     stdin_open: true
+    depends_on:
+      - certbot
+      - api
     image: nginx
     restart: unless-stopped
     container_name: nginx_server
@@ -20,5 +15,31 @@ services:
       - .certbot/var:/var/lib/letsencrypt
       - .certbot/www:/var/www/certbot
     ports:
-      - 80:80
+      - 80:3000
       - 443:443
+    networks:
+      - app_network
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - .certbot/etc:/etc/letsencrypt
+      - .certbot/var:/var/lib/letsencrypt
+      - .certbot/www:/var/www/certbot
+    command: certonly --webroot -w /var/www/certbot --email {email} --keep-until-expiring -d {domain} --agree-tos
+  api:
+    build:
+      dockerfile: Dockerfile
+      context: ./backend
+    container_name: node_app
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - /app/node_modules
+      - ./backend/:/app/
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge

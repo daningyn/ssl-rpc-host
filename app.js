@@ -1,20 +1,8 @@
-const fs = require('fs');
-const cp = require('child_process');
+const express = require('express')
+const app = express()
 
-if (!fs.existsSync('./docker-compose.yml') || !fs.existsSync('./nginx/nginx.conf')) {
-  console.log('Please run `npm run generate -- --vps {your vps ip} --email {your email}`');
-  process.exit(0);
-}
+app.get('/', function (req, res) {
+  res.send('by daningyn');
+})
 
-const child = cp.exec('docker-compose up -d --build', (err, stdout, stderr) => {
-  if (err) {
-    console.log(err.message);
-    process.exit(0);
-    return
-  }
-});
-
-child.stdout.on('data', data => {
-  console.log(data.toString());
-});
-
+app.listen(3000)
