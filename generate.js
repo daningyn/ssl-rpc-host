@@ -25,9 +25,9 @@ let nginxConf = fs.readFileSync('./nginx/nginx.conf', 'utf-8');
 nginxConf = _.replace(nginxConf, new RegExp('{vps}', 'g'), vps);
 fs.writeFileSync('./nginx/nginx.conf', nginxConf, 'utf-8');
 
-fs.cpSync('./docker-compose-template.yml', './docker-compose.yml');
-let dockerComposeYml = fs.readFileSync('./docker-compose.yml', 'utf-8');
+fs.cpSync('./docker-compose-certbot-template.yml', './docker-compose-certbot.yml');
+let dockerComposeYml = fs.readFileSync('./docker-compose-certbot.yml', 'utf-8');
 dockerComposeYml = _.replace(dockerComposeYml, new RegExp('{domain}', 'g'), vps);
 dockerComposeYml = _.replace(dockerComposeYml, new RegExp('{email}', 'g'), email);
-fs.writeFileSync('./docker-compose.yml', dockerComposeYml, 'utf-8');
+fs.writeFileSync('./docker-compose-certbot.yml', dockerComposeYml, 'utf-8');
 
