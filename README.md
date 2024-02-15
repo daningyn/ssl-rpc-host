@@ -102,9 +102,9 @@ docker-compose up -d --build
 
 ## Link for DYM RollApp
 
-- rpc: https://{your dns}/rpc
-- rest endpoint: https://{your dns}/rest
-- rpc endpoint: https://{your dns}/rpcEndPoint
+- rpc: `https://{your dns}/rpc`
+- rest endpoint: `https://{your dns}/rest`
+- rpc endpoint: `https://{your dns}/rpcEndPoint`
 
 ## Contributing
 
